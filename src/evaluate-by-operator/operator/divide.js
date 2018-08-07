@@ -10,7 +10,8 @@ export default function func(first, ...rest) {
     throw Error(ERROR_DIV_ZERO);
   }
   if (isNaN(result)) {
-    throw Error(ERROR_VALUE);
+    return 'NaN'; // div / 0
+    // throw Error(ERROR_VALUE);
   }
 
   return result;

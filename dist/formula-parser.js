@@ -11564,7 +11564,8 @@ function func(first) {
     throw Error(_error.ERROR_DIV_ZERO);
   }
   if (isNaN(result)) {
-    throw Error(_error.ERROR_VALUE);
+    return 'NaN'; // div / 0
+    // throw Error(ERROR_VALUE);
   }
 
   return result;
