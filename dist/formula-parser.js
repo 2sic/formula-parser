@@ -11499,7 +11499,7 @@ function func(first) {
   }
 
   var result = rest.reduce(function (acc, value) {
-    return acc + (0, _number.toNumber)(value);
+    return acc + (0, _number.toNumber)(value) || 0;
   }, (0, _number.toNumber)(first));
 
   if (isNaN(result)) {
@@ -11584,7 +11584,7 @@ exports['default'] = func;
 var SYMBOL = exports.SYMBOL = '=';
 
 function func(exp1, exp2) {
-  return exp1 === exp2;
+  return exp1 === exp2 ? 1 : 0;
 }
 
 func.SYMBOL = SYMBOL;
