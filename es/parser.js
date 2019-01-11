@@ -240,7 +240,11 @@ var Parser = function (_Emitter) {
    */
 
 
-  Parser.prototype._callRangeValue = function _callRangeValue(startLabel, endLabel) {
+  Parser.prototype._callRangeValue = function _callRangeValue(startLabel, endLabel, TEST) {
+    console.log('TEST is a ":"?', TEST);
+    console.log('startLabel', startLabel);
+    console.log('endLabel', endLabel);
+
     startLabel = startLabel.toUpperCase();
     endLabel = endLabel.toUpperCase();
 

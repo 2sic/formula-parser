@@ -8,7 +8,6 @@
 [A-Za-z]{1,}[A-Za-z_0-9\.]+(?=[(])                                                              {return 'FUNCTION';}
 '#'[A-Z0-9\/]+('!'|'?')?                                                                        {return 'ERROR';}
 '$'[A-Za-z]+'$'[0-9]+                                                                           {return 'ABSOLUTE_CELL';}
-[A-Za-z]{1,}[A-Za-z_0-9]+'!'                                                                    {return 'SHEETNAME';}
 '$'[A-Za-z]+[0-9]+                                                                              {return 'MIXED_CELL';}
 [A-Za-z]+'$'[0-9]+                                                                              {return 'MIXED_CELL';}
 [A-Za-z]+[0-9]+                                                                                 {return 'RELATIVE_CELL';}
@@ -153,9 +152,6 @@ cell
     }
   | MIXED_CELL {
       $$ = yy.cellValue($1);
-    }
-  | SHEETNAME SCOPED_CELL ':' ABSOLUTE_CELL {
-      $$ = yy.rangeValue($1, $3, $2);
     }
   | ABSOLUTE_CELL ':' ABSOLUTE_CELL {
       $$ = yy.rangeValue($1, $3);

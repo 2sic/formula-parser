@@ -197,7 +197,11 @@ class Parser extends Emitter {
    * @returns {Array} Returns an array of mixed values.
    * @private
    */
-  _callRangeValue(startLabel, endLabel) {
+  _callRangeValue(startLabel, endLabel, TEST) {
+    console.log('TEST is a ":"?', TEST);
+    console.log('startLabel', startLabel);
+    console.log('endLabel', endLabel);
+
     startLabel = startLabel.toUpperCase();
     endLabel = endLabel.toUpperCase();
 
