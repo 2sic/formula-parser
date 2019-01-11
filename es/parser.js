@@ -39,9 +39,7 @@ var Parser = function (_Emitter) {
       callFunction: function callFunction(name, params) {
         return _this._callFunction(name, params);
       },
-      cellValue: function cellValue(value) {
-        return _this._callCellValue(value);
-      },
+      cellValue: _this._callCellValue.bind(_this),
       rangeValue: _this._callRangeValue.bind(_this)
     };
     _this.variables = Object.create(null);
@@ -212,7 +210,7 @@ var Parser = function (_Emitter) {
    */
 
 
-  Parser.prototype._callCellValue = function _callCellValue(label) {
+  Parser.prototype._callCellValue = function _callCellValue(label, sheetName) {
     label = label.toUpperCase();
 
     var _extractLabel = extractLabel(label),
@@ -221,7 +219,7 @@ var Parser = function (_Emitter) {
 
     var value = void 0;
 
-    this.emit('callCellValue', { label: label, row: row, column: column }, function (_value) {
+    this.emit('callCellValue', { label: label, row: row, column: column, sheetName: sheetName }, function (_value) {
       value = _value;
     });
 
@@ -238,9 +236,7 @@ var Parser = function (_Emitter) {
    */
 
 
-  Parser.prototype._callRangeValue = function _callRangeValue(startLabel, endLabel, TEST) {
-    console.log('_callRangeValue', JSON.stringify(arguments));
-
+  Parser.prototype._callRangeValue = function _callRangeValue(startLabel, endLabel, sheetName) {
     startLabel = startLabel.toUpperCase();
     endLabel = endLabel.toUpperCase();
 
@@ -276,7 +272,7 @@ var Parser = function (_Emitter) {
 
     var value = [];
 
-    this.emit('callRangeValue', startCell, endCell, function () {
+    this.emit('callRangeValue', startCell, endCell, sheetName, function () {
       var _value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
       value = _value;

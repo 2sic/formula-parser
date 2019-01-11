@@ -154,8 +154,11 @@ cell
   | MIXED_CELL {
       $$ = yy.cellValue($1);
     }
+  | SHEET_NAME RELATIVE_CELL {
+      $$ = yy.cellValue($2, $1);
+    }
   | SHEET_NAME RELATIVE_CELL ':' RELATIVE_CELL {
-      $$ = yy.rangeValue($1, $3, $2);
+      $$ = yy.rangeValue($2, $4, $1);
     }
   | ABSOLUTE_CELL ':' ABSOLUTE_CELL {
       $$ = yy.rangeValue($1, $3);

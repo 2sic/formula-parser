@@ -21,7 +21,7 @@ class Parser extends Emitter {
       callVariable: (variable) => this._callVariable(variable),
       evaluateByOperator,
       callFunction: (name, params) => this._callFunction(name, params),
-      cellValue: (value) => this._callCellValue(value),
+      cellValue: this._callCellValue.bind(this),
       rangeValue: this._callRangeValue.bind(this),
     };
     this.variables = Object.create(null);
@@ -176,13 +176,13 @@ class Parser extends Emitter {
    * @returns {*}
    * @private
    */
-  _callCellValue(label) {
+  _callCellValue(label, sheetName) {
     label = label.toUpperCase();
 
     const [row, column] = extractLabel(label);
     let value = void 0;
 
-    this.emit('callCellValue', {label, row, column}, (_value) => {
+    this.emit('callCellValue', {label, row, column, sheetName}, (_value) => {
       value = _value;
     });
 
@@ -197,9 +197,7 @@ class Parser extends Emitter {
    * @returns {Array} Returns an array of mixed values.
    * @private
    */
-  _callRangeValue(startLabel, endLabel, TEST) {
-    console.log('_callRangeValue', JSON.stringify(arguments));
-
+  _callRangeValue(startLabel, endLabel, sheetName) {
     startLabel = startLabel.toUpperCase();
     endLabel = endLabel.toUpperCase();
 
@@ -229,7 +227,7 @@ class Parser extends Emitter {
 
     let value = [];
 
-    this.emit('callRangeValue', startCell, endCell, (_value = []) => {
+    this.emit('callRangeValue', startCell, endCell, sheetName, (_value = []) => {
       value = _value;
     });
 
