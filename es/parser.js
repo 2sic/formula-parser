@@ -42,9 +42,7 @@ var Parser = function (_Emitter) {
       cellValue: function cellValue(value) {
         return _this._callCellValue(value);
       },
-      rangeValue: function rangeValue(start, end) {
-        return _this._callRangeValue(start, end);
-      }
+      rangeValue: _this._callRangeValue.bind(_this)
     };
     _this.variables = Object.create(null);
     _this.functions = Object.create(null);
@@ -241,9 +239,7 @@ var Parser = function (_Emitter) {
 
 
   Parser.prototype._callRangeValue = function _callRangeValue(startLabel, endLabel, TEST) {
-    console.log('TEST is a ":"?', TEST);
-    console.log('startLabel', startLabel);
-    console.log('endLabel', endLabel);
+    console.log('_callRangeValue', JSON.stringify(arguments));
 
     startLabel = startLabel.toUpperCase();
     endLabel = endLabel.toUpperCase();

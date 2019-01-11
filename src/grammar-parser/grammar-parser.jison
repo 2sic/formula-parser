@@ -1,4 +1,4 @@
-/* description: Parses end evaluates mathematical expressions. */
+/* description: Parses and evaluates mathematical expressions. */
 /* lexical grammar */
 %lex
 %%

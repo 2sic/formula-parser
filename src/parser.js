@@ -22,7 +22,7 @@ class Parser extends Emitter {
       evaluateByOperator,
       callFunction: (name, params) => this._callFunction(name, params),
       cellValue: (value) => this._callCellValue(value),
-      rangeValue: (start, end) => this._callRangeValue(start, end),
+      rangeValue: this._callRangeValue.bind(this),
     };
     this.variables = Object.create(null);
     this.functions = Object.create(null);
@@ -198,9 +198,7 @@ class Parser extends Emitter {
    * @private
    */
   _callRangeValue(startLabel, endLabel, TEST) {
-    console.log('TEST is a ":"?', TEST);
-    console.log('startLabel', startLabel);
-    console.log('endLabel', endLabel);
+    console.log('_callRangeValue', JSON.stringify(arguments));
 
     startLabel = startLabel.toUpperCase();
     endLabel = endLabel.toUpperCase();
