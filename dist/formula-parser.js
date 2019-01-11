@@ -11044,6 +11044,7 @@ var Parser = function (_Emitter) {
   Parser.prototype.parse = function parse(expression) {
     var result = null;
     var error = null;
+    var realError = null;
 
     try {
       if (expression === '') {
@@ -11053,6 +11054,7 @@ var Parser = function (_Emitter) {
       }
     } catch (ex) {
       var message = (0, _error2['default'])(ex.message);
+      realError = ex;
 
       if (message) {
         error = message;
@@ -11063,12 +11065,14 @@ var Parser = function (_Emitter) {
 
     if (result instanceof Error) {
       error = (0, _error2['default'])(result.message) || (0, _error2['default'])(_error.ERROR);
+      realError = result.message;
       result = null;
     }
 
     return {
       error: error,
-      result: result
+      result: result,
+      realError: realError
     };
   };
 

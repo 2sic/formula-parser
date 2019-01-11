@@ -42,6 +42,7 @@ class Parser extends Emitter {
   parse(expression) {
     let result = null;
     let error = null;
+    let realError = null;
 
     try {
       if (expression === '') {
@@ -51,6 +52,7 @@ class Parser extends Emitter {
       }
     } catch (ex) {
       const message = errorParser(ex.message);
+      realError = ex;
 
       if (message) {
         error = message;
@@ -61,12 +63,14 @@ class Parser extends Emitter {
 
     if (result instanceof Error) {
       error = errorParser(result.message) || errorParser(ERROR);
+      realError = result.message;
       result = null;
     }
 
     return {
       error,
       result,
+      realError,
     };
   }
 

@@ -64,6 +64,7 @@ var Parser = function (_Emitter) {
   Parser.prototype.parse = function parse(expression) {
     var result = null;
     var error = null;
+    var realError = null;
 
     try {
       if (expression === '') {
@@ -73,6 +74,7 @@ var Parser = function (_Emitter) {
       }
     } catch (ex) {
       var message = errorParser(ex.message);
+      realError = ex;
 
       if (message) {
         error = message;
@@ -83,12 +85,14 @@ var Parser = function (_Emitter) {
 
     if (result instanceof Error) {
       error = errorParser(result.message) || errorParser(ERROR);
+      realError = result.message;
       result = null;
     }
 
     return {
       error: error,
-      result: result
+      result: result,
+      realError: realError
     };
   };
 
