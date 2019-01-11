@@ -74,7 +74,7 @@ var Parser = function (_Emitter) {
       }
     } catch (ex) {
       var message = errorParser(ex.message);
-      realError = ex;
+      realError = { msg: 'Invalid expression: ', expression: expression, exception: ex };
 
       if (message) {
         error = message;
@@ -85,7 +85,8 @@ var Parser = function (_Emitter) {
 
     if (result instanceof Error) {
       error = errorParser(result.message) || errorParser(ERROR);
-      realError = result.message;
+      realError = { msg: 'Result returned an error: ', result: result };
+
       result = null;
     }
 

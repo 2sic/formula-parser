@@ -52,7 +52,7 @@ class Parser extends Emitter {
       }
     } catch (ex) {
       const message = errorParser(ex.message);
-      realError = ex;
+      realError = { msg: 'Invalid expression: ', expression, exception: ex };
 
       if (message) {
         error = message;
@@ -63,7 +63,8 @@ class Parser extends Emitter {
 
     if (result instanceof Error) {
       error = errorParser(result.message) || errorParser(ERROR);
-      realError = result.message;
+      realError = { msg: 'Result returned an error: ', result };
+
       result = null;
     }
 
