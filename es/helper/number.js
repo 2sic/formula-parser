@@ -10,7 +10,11 @@ export function toNumber(number) {
   if (typeof number === 'number') {
     result = number;
   } else if (typeof number === 'string') {
-    result = number.indexOf('.') > -1 ? parseFloat(number) : parseInt(number, 10);
+    if (number.trim() === '') {
+      result = 0;
+    } else {
+      result = number.indexOf('.') > -1 ? parseFloat(number) : parseInt(number, 10);
+    }
   }
 
   return result;
