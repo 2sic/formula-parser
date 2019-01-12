@@ -9,7 +9,6 @@
 '#'[A-Z0-9\/]+('!'|'?')?                                                                        {return 'ERROR';}
 '$'[A-Za-z]+'$'[0-9]+                                                                           {return 'ABSOLUTE_CELL';}
 [A-ZÄÖÜa-zäöü]{1,}[A-Za-z_0-9]+'!'                                                              {return 'SHEET_NAME';}
-\'[A-ZÄÖÜa-zäöü ]{1,}[A-Za-z_0-9]+\'+'!'                                                        {return 'SHEET_NAME_IN_QUOTES';}
 '$'[A-Za-z]+[0-9]+                                                                              {return 'MIXED_CELL';}
 [A-Za-z]+'$'[0-9]+                                                                              {return 'MIXED_CELL';}
 [A-Za-z]+[0-9]+                                                                                 {return 'RELATIVE_CELL';}
@@ -152,7 +151,7 @@ sheetName
    : SHEET_NAME {
       $$ = $1;
     }
-  | SHEET_NAME_IN_QUOTES {
+  | STRING '!' {
     $$ = $1;
   }
 ;
