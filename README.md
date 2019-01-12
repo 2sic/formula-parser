@@ -4,4 +4,9 @@ Library provides a `Parser` class that evaluates excel and mathematical formulas
 
 - - -
 
-This parser implements sheet references..
+## Improvements over the original Formula Parser
+- Support for all possible sheet references (cells and ranges). The sheet name is included in the callbacks as well.
+- Support for german umlauts.
+- Interpret whitespaces as 0 in numeric operations.
+- More detailed error handling.
+- ..
