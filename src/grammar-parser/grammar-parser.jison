@@ -9,6 +9,7 @@
 '#'[A-Z0-9\/]+('!'|'?')?                                                                        {return 'ERROR';}
 '$'[A-Za-z]+'$'[0-9]+                                                                           {return 'ABSOLUTE_CELL';}
 [A-ZÄÖÜa-zäöü]{1,}[A-Za-z_0-9]+'!'                                                              {return 'SHEET_NAME';}
+\'[A-ZÄÖÜa-zäöü ]{1,}[A-Za-z_0-9]+\'+'!'                                                        {return 'SHEET_NAME_IN_QUOTES';}
 '$'[A-Za-z]+[0-9]+                                                                              {return 'MIXED_CELL';}
 [A-Za-z]+'$'[0-9]+                                                                              {return 'MIXED_CELL';}
 [A-Za-z]+[0-9]+                                                                                 {return 'RELATIVE_CELL';}
@@ -147,6 +148,15 @@ expression
   | error error
 ;
 
+sheetName
+   : SHEET_NAME {
+      $$ = $1;
+    }
+  | SHEET_NAME_IN_QUOTES {
+    $$ = $1;
+  }
+;
+
 cell
    : ABSOLUTE_CELL {
       $$ = yy.cellValue($1);
@@ -184,40 +194,40 @@ cell
   | MIXED_CELL ':' MIXED_CELL {
       $$ = yy.rangeValue($1, $3);
     }
-  | SHEET_NAME ABSOLUTE_CELL {
+  | sheetName ABSOLUTE_CELL {
       $$ = yy.cellValue($2, $1);
     }
-  | SHEET_NAME RELATIVE_CELL {
+  | sheetName RELATIVE_CELL {
       $$ = yy.cellValue($2, $1);
     }
-  | SHEET_NAME MIXED_CELL {
+  | sheetName MIXED_CELL {
       $$ = yy.cellValue($2, $1);
     }
-  | SHEET_NAME ABSOLUTE_CELL ':' ABSOLUTE_CELL {
+  | sheetName ABSOLUTE_CELL ':' ABSOLUTE_CELL {
       $$ = yy.rangeValue($2, $4, $1);
     }
-  | SHEET_NAME ABSOLUTE_CELL ':' RELATIVE_CELL {
+  | sheetName ABSOLUTE_CELL ':' RELATIVE_CELL {
       $$ = yy.rangeValue($2, $4, $1);
     }
-  | SHEET_NAME ABSOLUTE_CELL ':' MIXED_CELL {
+  | sheetName ABSOLUTE_CELL ':' MIXED_CELL {
       $$ = yy.rangeValue($2, $4, $1);
     }
-  | SHEET_NAME RELATIVE_CELL ':' ABSOLUTE_CELL {
+  | sheetName RELATIVE_CELL ':' ABSOLUTE_CELL {
       $$ = yy.rangeValue($2, $4, $1);
     }
-  | SHEET_NAME RELATIVE_CELL ':' RELATIVE_CELL {
+  | sheetName RELATIVE_CELL ':' RELATIVE_CELL {
       $$ = yy.rangeValue($2, $4, $1);
     }
-  | SHEET_NAME RELATIVE_CELL ':' MIXED_CELL {
+  | sheetName RELATIVE_CELL ':' MIXED_CELL {
       $$ = yy.rangeValue($2, $4, $1);
     }
-  | SHEET_NAME MIXED_CELL ':' ABSOLUTE_CELL {
+  | sheetName MIXED_CELL ':' ABSOLUTE_CELL {
       $$ = yy.rangeValue($2, $4, $1);
     }
-  | SHEET_NAME MIXED_CELL ':' RELATIVE_CELL {
+  | sheetName MIXED_CELL ':' RELATIVE_CELL {
       $$ = yy.rangeValue($2, $4, $1);
     }
-  | SHEET_NAME MIXED_CELL ':' MIXED_CELL {
+  | sheetName MIXED_CELL ':' MIXED_CELL {
       $$ = yy.rangeValue($2, $4, $1);
     }
 ;
