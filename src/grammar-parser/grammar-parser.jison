@@ -67,6 +67,9 @@ expression
   : variableSequence {
       $$ = yy.callVariable($1[0]);
     }
+  | expression '%' {
+      $$ = yy.toNumber($1) * 0.01;
+    }
   | number {
       $$ = yy.toNumber($1);
     }
