@@ -157,12 +157,6 @@ cell
   | MIXED_CELL {
       $$ = yy.cellValue($1);
     }
-  | SHEET_NAME RELATIVE_CELL {
-      $$ = yy.cellValue($2, $1);
-    }
-  | SHEET_NAME RELATIVE_CELL ':' RELATIVE_CELL {
-      $$ = yy.rangeValue($2, $4, $1);
-    }
   | ABSOLUTE_CELL ':' ABSOLUTE_CELL {
       $$ = yy.rangeValue($1, $3);
     }
@@ -189,6 +183,42 @@ cell
     }
   | MIXED_CELL ':' MIXED_CELL {
       $$ = yy.rangeValue($1, $3);
+    }
+  | SHEET_NAME ABSOLUTE_CELL {
+      $$ = yy.cellValue($2, $1);
+    }
+  | SHEET_NAME RELATIVE_CELL {
+      $$ = yy.cellValue($2, $1);
+    }
+  | SHEET_NAME MIXED_CELL {
+      $$ = yy.cellValue($2, $1);
+    }
+  | SHEET_NAME ABSOLUTE_CELL ':' ABSOLUTE_CELL {
+      $$ = yy.rangeValue($2, $4, $1);
+    }
+  | SHEET_NAME ABSOLUTE_CELL ':' RELATIVE_CELL {
+      $$ = yy.rangeValue($2, $4, $1);
+    }
+  | SHEET_NAME ABSOLUTE_CELL ':' MIXED_CELL {
+      $$ = yy.rangeValue($2, $4, $1);
+    }
+  | SHEET_NAME RELATIVE_CELL ':' ABSOLUTE_CELL {
+      $$ = yy.rangeValue($2, $4, $1);
+    }
+  | SHEET_NAME RELATIVE_CELL ':' RELATIVE_CELL {
+      $$ = yy.rangeValue($2, $4, $1);
+    }
+  | SHEET_NAME RELATIVE_CELL ':' MIXED_CELL {
+      $$ = yy.rangeValue($2, $4, $1);
+    }
+  | SHEET_NAME MIXED_CELL ':' ABSOLUTE_CELL {
+      $$ = yy.rangeValue($2, $4, $1);
+    }
+  | SHEET_NAME MIXED_CELL ':' RELATIVE_CELL {
+      $$ = yy.rangeValue($2, $4, $1);
+    }
+  | SHEET_NAME MIXED_CELL ':' MIXED_CELL {
+      $$ = yy.rangeValue($2, $4, $1);
     }
 ;
 
